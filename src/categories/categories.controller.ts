@@ -10,18 +10,14 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { Observable } from 'rxjs';
-import AdminClient from 'src/clients/admin.client';
+import AdminClient from 'src/clients/clients.admin';
 import { ParametersValidationPipe } from 'src/pipes/parameters-validation.pipe';
 import { CreateCategoryDto } from './dtos/categories.create.dto';
 import { UpdateCategoryDto } from './dtos/categories.update.dto';
 
 @Controller('categories')
 export class CategoriesController {
-  private readonly adminClient: AdminClient;
-
-  constructor() {
-    this.adminClient = new AdminClient();
-  }
+  constructor(private adminClient: AdminClient) {}
 
   @Post()
   @UsePipes(ValidationPipe)
