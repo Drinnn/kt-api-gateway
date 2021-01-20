@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Logger,
   Param,
   Post,
   Put,
@@ -17,31 +18,38 @@ import { UpdateCategoryDto } from './dtos/categories.update.dto';
 
 @Controller('categories')
 export class CategoriesController {
+  private readonly logger: Logger = new Logger(CategoriesController.name);
   constructor(private adminClient: AdminClient) {}
 
   @Post()
   @UsePipes(ValidationPipe)
-  createCategory(@Body() createCategoryDto: CreateCategoryDto) {
-    this.adminClient.client.emit('create-category', createCategoryDto);
+  create(@Body() createDto: CreateCategoryDto) {
+    this.logger.log(`${this.create.name} - body: ${JSON.stringify(createDto)}`);
+
+    this.adminClient.client.emit('create-category', createDto);
   }
 
   @Get()
-  getCategories(@Query('categoryId') categoryId: string): Observable<any> {
-    return this.adminClient.client.send(
-      'get-categories',
-      categoryId ? categoryId : '',
-    );
+  get(@Query('id') id: string): Observable<any> {
+    this.logger.log(`${this.get.name} - query param: ${id}`);
+
+    return this.adminClient.client.send('get-categories', id ? id : '');
   }
 
   @Put('/:name')
   @UsePipes(ValidationPipe)
-  updateCategory(
-    @Body() updateCategoryDto: UpdateCategoryDto,
+  update(
+    @Body() updateDto: UpdateCategoryDto,
     @Param('name', ParametersValidationPipe) name: string,
   ): Observable<any> {
+    this.logger.log(
+      `${this.update.name} - url param: ${name} 
+       body: ${JSON.stringify(updateDto)}`,
+    );
+
     return this.adminClient.client.send('update-category', {
       name,
-      category: updateCategoryDto,
+      category: updateDto,
     });
   }
 }

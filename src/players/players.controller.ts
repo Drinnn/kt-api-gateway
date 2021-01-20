@@ -43,6 +43,8 @@ export class PlayersController {
 
   @Get()
   get(@Query('id') id: string): Observable<any> {
+    this.logger.log(`${this.get.name} - query param: ${id}`);
+
     return this.adminClient.client.send('get-players', id ? id : '');
   }
 
@@ -51,6 +53,9 @@ export class PlayersController {
     @Body() updateDto: UpdatePlayerDto,
     @Param('id', ParametersValidationPipe) id: string,
   ): Observable<any> {
+    this.logger.log(`${this.update.name} - url param: ${id}
+    body: ${JSON.stringify(updateDto)}`);
+
     const { categoryId } = updateDto;
     if (categoryId) {
       const category = this.adminClient.client.emit('get-category', categoryId);
@@ -71,6 +76,8 @@ export class PlayersController {
 
   @Delete(':/id')
   delete(@Param('id', ParametersValidationPipe) id: string) {
+    this.logger.log(`${this.delete.name} - url param: ${id}`);
+
     this.adminClient.client.send('delete-player', id);
   }
 }
