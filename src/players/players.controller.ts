@@ -29,7 +29,7 @@ export class PlayersController {
     const { categoryId } = createDto;
     this.logger.log(`${this.create.name} - body: ${JSON.stringify(createDto)}`);
 
-    const category = this.adminClient.client.emit('get-category', categoryId);
+    const category = this.adminClient.client.emit('get-categories', categoryId);
     category.toPromise();
 
     if (category) {
@@ -58,7 +58,10 @@ export class PlayersController {
 
     const { categoryId } = updateDto;
     if (categoryId) {
-      const category = this.adminClient.client.emit('get-category', categoryId);
+      const category = this.adminClient.client.emit(
+        'get-categories',
+        categoryId,
+      );
       category.toPromise();
 
       if (category) {
