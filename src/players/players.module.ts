@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ClientsModule } from '@nestjs/microservices';
+import { ClientsModule } from 'src/clients/clients.module';
 import { PlayersController } from './players.controller';
 
 @Module({
