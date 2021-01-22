@@ -14,5 +14,5 @@ export class CreatePlayerDto {
 
   @IsNotEmpty()
   @IsString()
-  readonly categoryId: string;
+  readonly category: string;
 }
