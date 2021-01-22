@@ -38,7 +38,7 @@ export class PlayersController {
       .toPromise();
 
     if (foundedCategory) {
-      this.adminClient.client.emit('create-player', createDto);
+      return this.adminClient.client.emit('create-player', createDto);
     } else {
       throw new BadRequestException(`Category with ID ${category} not found.`);
     }
@@ -107,6 +107,6 @@ export class PlayersController {
   delete(@Param('id', ParametersValidationPipe) id: string) {
     this.logger.log(`${this.delete.name} - url param: ${id}`);
 
-    this.adminClient.client.send('delete-player', id);
+    return this.adminClient.client.send('delete-player', id);
   }
 }

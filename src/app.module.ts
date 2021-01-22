@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config';
 import { CategoriesModule } from './categories/categories.module';
 import { PlayersModule } from './players/players.module';
 import { ClientsModule } from './clients/clients.module';
+import { ChallengesModule } from './challenges/challenges.module';
 
 @Module({
   imports: [
@@ -12,6 +13,7 @@ import { ClientsModule } from './clients/clients.module';
     CategoriesModule,
     PlayersModule,
     ClientsModule,
+    ChallengesModule,
   ],
 })
 export class AppModule {}

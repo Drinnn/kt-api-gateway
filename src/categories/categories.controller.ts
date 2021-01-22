@@ -26,7 +26,7 @@ export class CategoriesController {
   create(@Body() createDto: CreateCategoryDto) {
     this.logger.log(`${this.create.name} - body: ${JSON.stringify(createDto)}`);
 
-    this.adminClient.client.emit('create-category', createDto);
+    return this.adminClient.client.emit('create-category', createDto);
   }
 
   @Get()
